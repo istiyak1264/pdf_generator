@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&family=Montserrat:wght@500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Surfaces */
+  --bg-page:           #0b0c10;
+  --surface:           #11121a;
+  --surface-2:         #181921;
+  --surface-3:         #1e1f2a;
+
+  /* Nav */
+  --nav-bg:            rgba(17, 18, 26, 0.92);
+
+  /* Borders */
+  --border:            rgba(184, 151, 90, 0.13);
+  --border-strong:     rgba(184, 151, 90, 0.26);
+
+  /* Gold accents */
+  --accent-gold:       #c9a84c;
+  --accent-gold-dim:   #a8863c;
+  --accent-gold-glow:  rgba(201, 168, 76, 0.22);
+  --accent-gold-hero:  rgba(201, 168, 76, 0.07);
+
+  /* Crimson */
+  --accent-crimson:    #c04040;
+  --accent-crimson-dim:rgba(192, 64, 64, 0.14);
+
+  /* Text */
+  --text-primary:      #f0e8d5;
+  --text-secondary:    #b0a080;
+  --text-muted:        #5e5040;
+  --label-color:       #7a6a50;
+
+  /* Inputs */
+  --input-bg:          #181921;
+  --input-bg-hover:    #1c1d27;
+  --input-bg-focus:    #1e1f2c;
+  --input-border:      rgba(184, 151, 90, 0.18);
+  --input-border-hover:rgba(184, 151, 90, 0.38);
+
+  /* Radii */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+
+  /* Fonts */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Lato', 'Helvetica Neue', sans-serif;
+  --font-label:   'Montserrat', 'Arial', sans-serif;
+}
+
+/* ── Light Theme ── */
+[data-theme="light"] {
+  --bg-page:           #f2ece0;
+  --surface:           #faf6ee;
+  --surface-2:         #ede5d4;
+  --surface-3:         #e4dbc8;
+  --nav-bg:            rgba(250, 246, 238, 0.94);
+  --border:            rgba(130, 95, 35, 0.15);
+  --border-strong:     rgba(130, 95, 35, 0.30);
+  --accent-gold:       #8b6428;
+  --accent-gold-dim:   #a07830;
+  --accent-gold-glow:  rgba(139, 100, 40, 0.18);
+  --accent-gold-hero:  rgba(139, 100, 40, 0.07);
+  --accent-crimson:    #a83030;
+  --accent-crimson-dim:rgba(168, 48, 48, 0.12);
+  --text-primary:      #1a1208;
+  --text-secondary:    #4a3820;
+  --text-muted:        #8a7050;
+  --label-color:       #6a5030;
+  --input-bg:          #faf4e8;
+  --input-bg-hover:    #f4edd8;
+  --input-bg-focus:    #fffbf2;
+  --input-border:      rgba(130, 95, 35, 0.20);
+  --input-border-hover:rgba(130, 95, 35, 0.42);
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: background 0.35s ease, color 0.35s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

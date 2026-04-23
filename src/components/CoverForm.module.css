@@ -1,0 +1,265 @@
+/* ══════════════════════════════════════════
+   CoverForm — CoverGen · PUST
+   Left panel: form inputs
+   ══════════════════════════════════════════ */
+
+.panel {
+  width: 380px;
+  min-width: 340px;
+  max-width: 400px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  animation: panelReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.1s;
+  position: relative;
+}
+
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent-gold) 30%, var(--accent-gold-dim) 70%, transparent 100%);
+  z-index: 5;
+}
+
+/* ── Panel Header ── */
+.panelHeader {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: linear-gradient(to bottom, var(--accent-gold-hero) 0%, transparent 100%);
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.progressText {
+  font-family: var(--font-label);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.progressPct {
+  font-family: var(--font-label);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.progressTrack {
+  height: 3px;
+  background: var(--surface-3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-gold-dim) 100%);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px var(--accent-gold-glow);
+}
+
+/* ── Scroll Area ── */
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 18px 18px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.scrollArea::-webkit-scrollbar { width: 3px; }
+.scrollArea::-webkit-scrollbar-track { background: transparent; }
+.scrollArea::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+
+/* ── Sections ── */
+.section {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child { border-bottom: none; }
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+.sectionIcon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--accent-gold-hero);
+  border: 1px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  color: var(--accent-gold);
+}
+
+.section:hover .sectionIcon {
+  background: var(--accent-gold-glow);
+  border-color: var(--accent-gold);
+}
+
+.sectionTitleGroup { flex: 1; }
+
+.sectionTitle {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.section:hover .sectionTitle { color: var(--accent-gold); }
+
+.sectionSubtitle {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.sectionChevron {
+  color: var(--text-muted);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sectionChevron.open {
+  transform: rotate(180deg);
+  color: var(--accent-gold);
+}
+
+.sectionFields {
+  display: flex; flex-direction: column; gap: 12px;
+  animation: sectionOpen 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sectionOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ── Actions ── */
+.actions {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  background: var(--surface);
+  position: relative;
+}
+
+.actions::before {
+  content: "";
+  position: absolute;
+  top: -18px; left: 0; right: 0;
+  height: 18px;
+  background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.btnReset {
+  padding: 9px 16px;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-label);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnReset:hover {
+  border-color: var(--accent-crimson);
+  color: var(--accent-crimson);
+  background: var(--accent-crimson-dim);
+}
+
+.btnGenerate {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dim) 100%);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #0d0e12;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 14px var(--accent-gold-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.btnGenerate::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btnGenerate:hover { transform: translateY(-2px); box-shadow: 0 6px 26px var(--accent-gold-glow); }
+.btnGenerate:hover::before { opacity: 1; }
+.btnGenerate:active { transform: translateY(0); }
+.btnGenerating { opacity: 0.75; pointer-events: none; }
+
+.spinner {
+  width: 13px; height: 13px;
+  border: 2px solid rgba(13, 14, 18, 0.25);
+  border-top-color: #0d0e12;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

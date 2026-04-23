@@ -1,0 +1,147 @@
+/* ══════════════════════════════════════════
+   FormField — CoverGen · PUST
+   Dynamic theme: deep academia / burnished gold
+   ══════════════════════════════════════════ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  animation: fieldSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fieldSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.label {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--label-color);
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.field:focus-within .label {
+  color: var(--accent-gold);
+}
+
+.required {
+  color: var(--accent-crimson);
+  font-size: 13px;
+  line-height: 1;
+  margin-left: 1px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Input / Select shared base ── */
+.input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 10px 13px;
+  width: 100%;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 12px;
+}
+
+.input:hover:not(:focus):not(.inputError) {
+  border-color: var(--input-border-hover);
+  background: var(--input-bg-hover);
+}
+
+.input:focus {
+  border-color: var(--accent-gold);
+  background: var(--input-bg-focus);
+  box-shadow:
+    0 0 0 3px var(--accent-gold-glow),
+    0 1px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ── Select specifics ── */
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23b8975a' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  padding-right: 34px;
+  cursor: pointer;
+}
+
+.select option {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding: 6px 12px;
+}
+
+/* ── Error state ── */
+.inputError {
+  border-color: var(--accent-crimson) !important;
+  box-shadow: 0 0 0 3px rgba(185, 60, 60, 0.15) !important;
+  animation: shake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-2px); }
+  40%, 60% { transform: translateX(2px); }
+}
+
+.errorMsg {
+  font-family: var(--font-label);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--accent-crimson);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: errorAppear 0.2s ease;
+}
+
+.errorMsg::before {
+  content: "⚠";
+  font-size: 9px;
+}
+
+@keyframes errorAppear {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
