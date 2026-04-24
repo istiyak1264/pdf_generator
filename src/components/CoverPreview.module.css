@@ -1,7 +1,3 @@
-/* ══════════════════════════════════════════
-   CoverPreview — right pane, fills viewport
-   ══════════════════════════════════════════ */
-
 .previewPane {
   flex: 1;
   background: var(--bg-page);
@@ -9,13 +5,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 28px 32px 32px;
+  padding: 24px 24px 32px;
   gap: 14px;
   height: 100%;
   overflow-y: auto;
   position: relative;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
+  min-width: 0;
 }
 
 .previewPane::-webkit-scrollbar { width: 4px; }
@@ -103,7 +100,6 @@
   position: relative;
   z-index: 1;
   animation: a4Reveal 0.7s 0.15s cubic-bezier(0.16,1,0.3,1) both;
-  /* Scale to fit viewport height */
   transform-origin: top center;
 }
 
@@ -146,4 +142,17 @@
 @keyframes flashFade {
   from { opacity: 1; }
   to   { opacity: 0; }
+}
+
+/* ── Mobile: preview shown below form ── */
+@media (max-width: 767px) {
+  .previewPane {
+    padding: 20px 16px 24px;
+    height: auto;
+    min-height: 420px;
+  }
+
+  .previewPane::before {
+    display: none;
+  }
 }

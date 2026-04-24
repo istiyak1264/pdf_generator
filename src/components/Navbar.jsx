@@ -1,13 +1,8 @@
+import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./Navbar.module.css";
 
+/* ── SVG Icon set ─────────────────────────────────────────── */
 const Icons = {
-  Home: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-      <polyline points="9 22 9 12 15 12 15 22"/>
-    </svg>
-  ),
   FileText: () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -33,89 +28,272 @@ const Icons = {
     </svg>
   ),
   Sun: () => (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5"/>
-      <line x1="12" y1="1" x2="12" y2="3"/>
-      <line x1="12" y1="21" x2="12" y2="23"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-      <line x1="1" y1="12" x2="3" y2="12"/>
-      <line x1="21" y1="12" x2="23" y2="12"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="4.5"/>
+      <line x1="12" y1="2"  x2="12" y2="5"/>
+      <line x1="12" y1="19" x2="12" y2="22"/>
+      <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+      <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+      <line x1="2"  y1="12" x2="5"  y2="12"/>
+      <line x1="19" y1="12" x2="22" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+      <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
     </svg>
   ),
   Moon: () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  ),
+  Menu: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="3" y1="6"  x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  ),
+  X: () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6"  x2="6"  y2="18"/>
+      <line x1="6"  y1="6"  x2="18" y2="18"/>
     </svg>
   ),
 };
 
+/* ── Nav link definitions ─────────────────────────────────── */
+const NAV_LINKS = [
+  { id: "generate", label: "Generate PDF", icon: Icons.FileText, shortcut: "G" },
+  { id: "contact",  label: "Contact",      icon: Icons.Mail,     shortcut: "C" },
+  { id: "about",    label: "About",         icon: Icons.Info,     shortcut: "A" },
+];
+
+/* ─────────────────────────────────────────────────────────── */
+
 export function Navbar({ theme, onThemeToggle, activePage, onNavigate }) {
-  const navLinks = [
-    { id: "generate", label: "Generate PDF", icon: <Icons.FileText /> },
-    { id: "contact",  label: "Contact",      icon: <Icons.Mail /> },
-    { id: "about",    label: "About",         icon: <Icons.Info /> },
-  ];
+  const [scrolled, setScrolled]   = useState(false);
+  const [scrollPct, setScrollPct] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  /* Sliding pill */
+  const navCenterRef = useRef(null);
+  const linkRefs     = useRef({});
+  const [pill, setPill] = useState({ left: 0, width: 0, opacity: 0 });
+
+  /* Update pill whenever activePage or layout changes */
+  const updatePill = useCallback(() => {
+    const activeEl  = linkRefs.current[activePage];
+    const container = navCenterRef.current;
+    if (!activeEl || !container) return;
+    const cRect = container.getBoundingClientRect();
+    const lRect = activeEl.getBoundingClientRect();
+    setPill({ left: lRect.left - cRect.left, width: lRect.width, opacity: 1 });
+  }, [activePage]);
+
+  useEffect(() => {
+    updatePill();
+    window.addEventListener("resize", updatePill);
+    return () => window.removeEventListener("resize", updatePill);
+  }, [updatePill]);
+
+  /* Scroll detection + progress */
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 6);
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPct(docH > 0 ? (window.scrollY / docH) * 100 : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* Close mobile menu on resize to desktop */
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 680) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  /* Keyboard shortcuts */
+  useEffect(() => {
+    const onKey = (e) => {
+      if (["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)) return;
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === "t" || e.key === "T") onThemeToggle();
+      if (e.key === "g" || e.key === "G") { onNavigate("generate"); setMobileOpen(false); }
+      if (e.key === "c" || e.key === "C") { onNavigate("contact");  setMobileOpen(false); }
+      if (e.key === "a" || e.key === "A") { onNavigate("about");    setMobileOpen(false); }
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onThemeToggle, onNavigate]);
+
+  const handleNav = (id) => {
+    onNavigate(id);
+    setMobileOpen(false);
+  };
 
   return (
-    <nav className={styles.navbar}>
-      {/* ── Left: Logo + Home ── */}
-      <div className={styles.navLeft}>
-        <button
-          className={`${styles.homeBtn} ${activePage === "home" ? styles.active : ""}`}
-          onClick={() => onNavigate("home")}
-          type="button"
-        >
-          <span className={styles.logoMark}>
-            <span className={styles.logoLetterP}>P</span>
-          </span>
-          <span className={styles.homeLabel}>
-            <span className={styles.homeName}>CoverGen</span>
-            <span className={styles.homeTag}>Home</span>
-          </span>
-        </button>
-      </div>
+    <>
+      <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ""}`}>
 
-      {/* ── Center: Nav Links ── */}
-      <div className={styles.navCenter}>
-        {navLinks.map((link) => (
-          <button
-            key={link.id}
-            className={`${styles.navLink} ${activePage === link.id ? styles.navLinkActive : ""}`}
-            onClick={() => onNavigate(link.id)}
-            type="button"
-          >
-            <span className={styles.navLinkIcon}>{link.icon}</span>
-            <span className={styles.navLinkLabel}>{link.label}</span>
-            {activePage === link.id && <span className={styles.activePip} />}
-          </button>
-        ))}
-      </div>
+        {/* ── Scroll progress bar ── */}
+        <div
+          className={styles.scrollProgress}
+          style={{ width: `${scrollPct}%` }}
+          aria-hidden="true"
+        />
 
-      {/* ── Right: Theme Toggle ── */}
-      <div className={styles.navRight}>
-        <div className={styles.themeToggleWrap}>
-          <span className={styles.themeLabel}>
-            {theme === "dark" ? "Night" : "Day"}
-          </span>
+        {/* ── Left: Logo ── */}
+        <div className={styles.navLeft}>
           <button
-            className={styles.themeToggle}
-            onClick={onThemeToggle}
+            className={styles.homeBtn}
+            onClick={() => handleNav("home")}
             type="button"
-            aria-label="Toggle theme"
+            aria-label="Home"
           >
-            <span className={`${styles.themeTrack} ${theme === "light" ? styles.themeTrackLight : ""}`}>
-              <span className={`${styles.thumbWrap} ${theme === "light" ? styles.thumbRight : ""}`}>
-                {theme === "dark" ? <Icons.Moon /> : <Icons.Sun />}
-              </span>
+            <span className={styles.logoMark}>
+              <span className={styles.logoRing} />
+              <span className={styles.logoLetterP}>P</span>
+              <span className={styles.logoShine} />
+            </span>
+            <span className={styles.homeLabel}>
+              <span className={styles.homeName}>CoverGen</span>
+              <span className={styles.homeTag}>PUST · Academic</span>
             </span>
           </button>
         </div>
+
+        {/* ── Center: Nav links + sliding pill (desktop) ── */}
+        <div className={styles.navCenter} ref={navCenterRef}>
+          {/* Sliding background pill */}
+          <span
+            className={styles.slidingPill}
+            style={{
+              left:    pill.left,
+              width:   pill.width,
+              opacity: pill.opacity,
+            }}
+          />
+
+          {NAV_LINKS.map((link, i) => {
+            const isActive = activePage === link.id;
+            return (
+              <button
+                key={link.id}
+                ref={(el) => { linkRefs.current[link.id] = el; }}
+                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                style={{ animationDelay: `${0.12 + i * 0.07}s` }}
+                onClick={() => handleNav(link.id)}
+                type="button"
+              >
+                <span className={styles.navLinkIcon}><link.icon /></span>
+                <span className={styles.navLinkLabel}>{link.label}</span>
+                <span className={styles.shortcutTag}>{link.shortcut}</span>
+                {isActive && <span className={styles.activePip} />}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ── Right: Theme toggle + mobile hamburger ── */}
+        <div className={styles.navRight}>
+          {/* Keyboard hint — desktop only */}
+          <span className={styles.kbHint} title="Press T to toggle theme">T</span>
+
+          <div className={styles.themeToggleWrap}>
+            <span className={styles.themeLabel}>
+              {theme === "dark" ? "Night" : "Day"}
+            </span>
+
+            <button
+              className={styles.themeToggle}
+              onClick={onThemeToggle}
+              type="button"
+              aria-label="Toggle theme"
+            >
+              <span className={`${styles.themeTrack} ${theme === "light" ? styles.themeTrackLight : ""}`}>
+                <span className={`${styles.thumbWrap} ${theme === "light" ? styles.thumbRight : ""}`}>
+                  <span className={`${styles.thumbIcon} ${theme === "dark" ? styles.thumbIconVisible : ""}`}>
+                    <Icons.Moon />
+                  </span>
+                  <span className={`${styles.thumbIcon} ${theme === "light" ? styles.thumbIconVisible : ""}`}>
+                    <Icons.Sun />
+                  </span>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          {/* Hamburger — mobile only */}
+          <button
+            className={`${styles.hamburger} ${mobileOpen ? styles.hamburgerOpen : ""}`}
+            onClick={() => setMobileOpen((p) => !p)}
+            type="button"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <Icons.X /> : <Icons.Menu />}
+          </button>
+        </div>
+      </nav>
+
+      {/* ── Mobile dropdown menu ── */}
+      <div
+        className={`${styles.mobileMenu} ${mobileOpen ? styles.mobileMenuOpen : ""}`}
+        aria-hidden={!mobileOpen}
+      >
+        <div className={styles.mobileMenuInner}>
+          {NAV_LINKS.map((link, i) => {
+            const isActive = activePage === link.id;
+            return (
+              <button
+                key={link.id}
+                className={`${styles.mobileNavLink} ${isActive ? styles.mobileNavLinkActive : ""}`}
+                style={{ animationDelay: mobileOpen ? `${i * 0.06}s` : "0s" }}
+                onClick={() => handleNav(link.id)}
+                type="button"
+              >
+                <span className={styles.mobileNavIcon}><link.icon /></span>
+                <span className={styles.mobileNavLabel}>{link.label}</span>
+                <span className={styles.mobileNavShortcut}>{link.shortcut}</span>
+              </button>
+            );
+          })}
+
+          <div className={styles.mobileDivider} />
+
+          {/* Theme toggle in mobile menu */}
+          <button
+            className={styles.mobileThemeRow}
+            onClick={onThemeToggle}
+            type="button"
+          >
+            <span className={styles.mobileNavIcon}>
+              {theme === "dark" ? <Icons.Moon /> : <Icons.Sun />}
+            </span>
+            <span className={styles.mobileNavLabel}>
+              {theme === "dark" ? "Switch to Day" : "Switch to Night"}
+            </span>
+            <span className={styles.mobileNavShortcut}>T</span>
+          </button>
+        </div>
       </div>
-    </nav>
+
+      {/* Backdrop for mobile menu */}
+      {mobileOpen && (
+        <div
+          className={styles.mobileBackdrop}
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+    </>
   );
 }
