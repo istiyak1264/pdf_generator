@@ -1,0 +1,36 @@
+.page {
+  min-height: calc(100vh - 58px);
+  padding-top: 58px;
+  position: relative;
+  overflow-x: hidden;
+  background: var(--bg-main); /* Matches navbar themes */
+}
+
+.ambientBg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 80% 20%, var(--accent-gold-hero), transparent 60%);
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  font-size: clamp(32px, 5vw, 48px);
+}
+
+.submitBtn {
+  background: var(--accent-gold);
+  color: #000;
+  font-family: var(--font-label);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--accent-gold-glow);
+}

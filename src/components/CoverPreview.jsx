@@ -64,7 +64,7 @@ export function CoverPreview({ values, previewId }) {
           <span className={styles.liveDot} />
           Live Preview
         </span>
-        <span className={styles.previewBadge}>A4 · PDF Ready</span>
+        <span className={styles.previewBadge}>A4 · Page Size</span>
       </div>
 
       {/* ── Scaled A4 clip wrapper ── */}

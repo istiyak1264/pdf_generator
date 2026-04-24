@@ -160,12 +160,11 @@ export function Navbar({ theme, onThemeToggle, activePage, onNavigate }) {
           >
             <span className={styles.logoMark}>
               <span className={styles.logoRing} />
-              <span className={styles.logoLetterP}>P</span>
+              <span className={styles.logoLetterP}>PUST</span>
               <span className={styles.logoShine} />
             </span>
             <span className={styles.homeLabel}>
               <span className={styles.homeName}>CoverGen</span>
-              <span className={styles.homeTag}>PUST · Academic</span>
             </span>
           </button>
         </div>
