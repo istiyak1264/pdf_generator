@@ -220,15 +220,6 @@
   padding: 4px 12px;
 }
 
-.versionText {
-  font-family: var(--font-label);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
 /* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }

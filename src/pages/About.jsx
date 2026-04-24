@@ -77,7 +77,7 @@ export function AboutPage() {
             <span className={styles.eyebrowLine} />
           </div>
           <h1 className={styles.title}>CoverGen</h1>
-          <p className={styles.subtitle}>PUST Version 2.0 · Assignment Cover Page Generator</p>
+          <p className={styles.subtitle}>PUST Version · Assignment Cover Page Generator</p>
         </header>
 
         {/* Info cards */}
@@ -110,8 +110,7 @@ export function AboutPage() {
 
         {/* Version badge */}
         <div className={styles.versionRow}>
-          <span className={styles.versionBadge}>v2.0.0</span>
-          <span className={styles.versionText}>Built for PUST students</span>
+          <span className={styles.versionBadge}>Built for PUST students</span>
         </div>
       </section>
     </main>
