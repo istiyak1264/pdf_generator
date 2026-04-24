@@ -1,0 +1,114 @@
+.dark {
+  /* Backgrounds */
+  --bg-main:         #0d0e12;
+  --bg-page:         #0f1015;
+  --nav-bg:          rgba(13, 14, 18, 0.88);
+
+  /* Surfaces */
+  --surface:         #131418;
+  --surface-2:       #17181e;
+  --surface-3:       #1c1d24;
+
+  /* Borders */
+  --border:          rgba(255, 255, 255, 0.07);
+  --border-strong:   rgba(255, 255, 255, 0.13);
+
+  /* Text */
+  --text-primary:    #e8e4d8;
+  --text-secondary:  #9a9690;
+  --text-muted:      #5a5752;
+
+  /* Inputs */
+  --input-bg:        #1a1b22;
+  --input-bg-hover:  #1e1f27;
+  --input-bg-focus:  #1c1d26;
+  --input-border:    rgba(255, 255, 255, 0.1);
+  --input-border-hover: rgba(255, 255, 255, 0.18);
+  --label-color:     #7a7670;
+
+  /* Accents */
+  --accent-gold:         #c9a84c;
+  --accent-gold-dim:     #a07030;
+  --accent-gold-hero:    rgba(201, 168, 76, 0.07);
+  --accent-gold-glow:    rgba(201, 168, 76, 0.22);
+  --accent-gold-glow-sm: rgba(201, 168, 76, 0.14);
+  --accent-crimson:      #b93c3c;
+  --accent-crimson-dim:  rgba(185, 60, 60, 0.1);
+
+  /* Typography */
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body:    'Source Serif 4', 'Georgia', serif;
+  --font-label:   'DM Mono', 'Courier New', monospace;
+
+  /* Radius */
+  --radius-sm: 7px;
+  --radius-md: 12px;
+}
+
+/* ── Light theme ── */
+.light {
+  --bg-main:         #f4f1eb;
+  --bg-page:         #ece8e0;
+  --nav-bg:          rgba(244, 241, 235, 0.92);
+
+  --surface:         #ffffff;
+  --surface-2:       #f9f6f0;
+  --surface-3:       #f0ece4;
+
+  --border:          rgba(0, 0, 0, 0.08);
+  --border-strong:   rgba(0, 0, 0, 0.14);
+
+  --text-primary:    #1a1814;
+  --text-secondary:  #5a5448;
+  --text-muted:      #a09880;
+
+  --input-bg:        #ffffff;
+  --input-bg-hover:  #faf7f2;
+  --input-bg-focus:  #fffdf8;
+  --input-border:    rgba(0, 0, 0, 0.12);
+  --input-border-hover: rgba(0, 0, 0, 0.2);
+  --label-color:     #7a7060;
+
+  --accent-gold:         #9a7228;
+  --accent-gold-dim:     #7a5518;
+  --accent-gold-hero:    rgba(154, 114, 40, 0.1);
+  --accent-gold-glow:    rgba(154, 114, 40, 0.2);
+  --accent-gold-glow-sm: rgba(154, 114, 40, 0.12);
+  --accent-crimson:      #c04040;
+  --accent-crimson-dim:  rgba(192, 64, 64, 0.1);
+
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body:    'Source Serif 4', 'Georgia', serif;
+  --font-label:   'DM Mono', 'Courier New', monospace;
+
+  --radius-sm: 7px;
+  --radius-md: 12px;
+}
+
+/* ── Base reset ── */
+.app {
+  min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  transition:
+    background 0.4s ease,
+    color      0.4s ease;
+}
+
+/* ── Workspace layout (generate page) ── */
+.workspacePage {
+  display: flex;
+  height: calc(100vh - 58px);
+  margin-top: 58px;
+  overflow: hidden;
+}
+
+/* ── Responsive: stack form above preview on mobile ── */
+@media (max-width: 767px) {
+  .workspacePage {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 58px);
+    overflow-y: auto;
+  }
+}
