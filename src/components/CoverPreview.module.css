@@ -13,13 +13,15 @@
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
   min-width: 0;
+  /* Ensure the pane is tall enough to show the A4 sheet on mobile */
+  min-height: 0;
 }
 
 .previewPane::-webkit-scrollbar { width: 4px; }
 .previewPane::-webkit-scrollbar-track { background: transparent; }
 .previewPane::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
 
-/* Ambient glow */
+/* Ambient glow — desktop only */
 .previewPane::before {
   content: "";
   position: fixed;
@@ -101,14 +103,7 @@
   z-index: 1;
   animation: a4Reveal 0.7s 0.15s cubic-bezier(0.16,1,0.3,1) both;
   transform-origin: top center;
-}
-
-@keyframes a4Reveal {
-  from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-#cover-preview-root {
+  /* Shadow that looks like a real page */
   box-shadow:
     0 1px 3px rgba(0,0,0,0.35),
     0 8px 32px rgba(0,0,0,0.45),
@@ -118,7 +113,7 @@
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-#cover-preview-root:hover {
+.a4Wrapper:hover {
   box-shadow:
     0 2px 4px rgba(0,0,0,0.4),
     0 14px 48px rgba(0,0,0,0.5),
@@ -126,6 +121,11 @@
     0 0 0 1px rgba(184,151,90,0.16),
     0 0 50px rgba(201,168,76,0.04);
   transform: translateY(-3px);
+}
+
+@keyframes a4Reveal {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Update flash */
@@ -144,15 +144,38 @@
   to   { opacity: 0; }
 }
 
-/* ── Mobile: preview shown below form ── */
-@media (max-width: 767px) {
+/* ── Tablet ── */
+@media (max-width: 1024px) and (min-width: 768px) {
   .previewPane {
     padding: 20px 16px 24px;
+  }
+}
+
+/* ── Mobile: preview is shown below the form ── */
+@media (max-width: 767px) {
+  .previewPane {
+    padding: 16px 12px 24px;
+    /* Must be tall enough to actually show the scaled A4 sheet */
+    min-height: 520px;
     height: auto;
-    min-height: 420px;
+    flex: 1 1 auto;
+    /* Remove ambient glow on mobile for perf */
   }
 
   .previewPane::before {
     display: none;
+  }
+
+  /* Prevent the wrapper from being clipped on mobile */
+  .a4Wrapper {
+    flex-shrink: 0;
+  }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 390px) {
+  .previewPane {
+    padding: 12px 8px 20px;
+    min-height: 460px;
   }
 }

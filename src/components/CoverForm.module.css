@@ -284,11 +284,15 @@
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    height: auto;
-    max-height: 60vh;
+    /* Use a fixed height so the preview beneath is always visible */
+    height: 52vh;
+    max-height: 52vh;
+    min-height: 320px;
     border-right: none;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    /* Ensure flex children don't overflow */
+    overflow: hidden;
   }
 
   .row {
@@ -304,6 +308,8 @@
   }
 
   .panel {
-    max-height: 55vh;
+    height: 48vh;
+    max-height: 48vh;
+    min-height: 280px;
   }
 }
