@@ -39,22 +39,22 @@ const Icons = {
 
 const CONTACT_INFO = [
   {
-    icon: Icons.Mail,
-    label: "Email",
-    value: "covergen@pust.ac.bd",
-    href: "mailto:covergen@pust.ac.bd",
+    icon: Icons.Facebook,
+    label: "Facebook",
+    value: "facebook.com/istiyakahmed.cse15.pust",
+    href: "https://www.facebook.com/istiyakahmed.cse15.pust",
   },
   {
-    icon: Icons.Github,
-    label: "GitHub",
-    value: "github.com/covergen-pust",
-    href: "https://github.com",
+    icon: Icons.Linkedin,
+    label: "LinkedIn",
+    value: "linkedin.com/in/yourprofile",
+    href: "https://linkedin.com/in/istiyak1264",
   },
   {
     icon: Icons.MapPin,
     label: "Location",
     value: "Pabna University of Science & Technology",
-    href: null,
+    href: "https://www.google.com/maps/dir//Pabna+University+of+Science+and+Technology,+Dhaka+-+Pabna+Hwy,+Pabna+6600/@24.0113252,89.2562229,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x39fe84f0ec23a72b:0x775d6cd53cbdad8b!2m2!1d89.2796812!2d24.0132789?entry=ttu&g_ep=EgoyMDI2MDQyMS4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
 

@@ -218,7 +218,7 @@ export function HomePage({ onNavigate }) {
       {/* ── Footer ── */}
       <footer className={styles.footer}>
         <p className={styles.footerText}>
-          CoverGen · PUST &nbsp;·&nbsp; Built for students, by students
+          CoverGen · PUST &nbsp;·&nbsp; Built for students, by Istiyak Ahmed
         </p>
       </footer>
     </main>
