@@ -2,18 +2,17 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { DEPARTMENTS } from "../data/departments";
 import styles from "./CoverPreview.module.css";
 
-const A4W      = 794;
-const A4H      = 1123;
-const INSET    = 18;    // dashed border distance from page edge (all 4 sides equal)
-const H_PAD    = 52;    // content horizontal padding inside border
+const A4W       = 794;
+const A4H       = 1123;
+const INSET     = 18;   // dashed border inset from page edge (all sides equal)
+const H_PAD     = 52;   // content horizontal padding inside the border
 const V_PAD_TOP = 38;
-const V_PAD_BOT = 32;
-const INNER_W  = A4W - INSET * 2 - H_PAD * 2; // ≈ 652 px usable width
+const V_PAD_BOT = 28;
+const INNER_W   = A4W - INSET * 2 - H_PAD * 2;
 
 const FONT_INJECT = `
   @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 `;
-
 const TNR = "'Times New Roman', 'Tinos', Times, serif";
 
 export function CoverPreview({ values, previewId }) {
@@ -91,16 +90,14 @@ export function CoverPreview({ values, previewId }) {
             flexShrink:      0,
           }}
         >
-          {/* Inject Tinos font so browsers render TNR correctly */}
+          {/* Inject Tinos so browsers render TNR correctly */}
           <style>{FONT_INJECT}</style>
 
-          {/* ── Single dashed border — SVG rect guarantees perfectly equal
-               dash/gap on all four sides with no corner artefacts ── */}
+          {/* ── Single uniform dashed border ── */}
           <svg
             style={{
               position:      "absolute",
-              top:  0,
-              left: 0,
+              top: 0, left: 0,
               width:         A4W,
               height:        A4H,
               display:       "block",
@@ -111,8 +108,7 @@ export function CoverPreview({ values, previewId }) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <rect
-              x={INSET}
-              y={INSET}
+              x={INSET} y={INSET}
               width={A4W  - INSET * 2}
               height={A4H - INSET * 2}
               fill="none"
@@ -124,7 +120,6 @@ export function CoverPreview({ values, previewId }) {
             />
           </svg>
 
-          {/* ─────────── Content container ─────────── */}
           <div
             style={{
               position:      "absolute",
@@ -139,7 +134,8 @@ export function CoverPreview({ values, previewId }) {
               overflow:      "hidden",
             }}
           >
-            {/* Logo */}
+
+            {/* ── Logo ── */}
             <div style={{ marginBottom: 16, flexShrink: 0 }}>
               <img
                 src="/logo.png"
@@ -149,21 +145,22 @@ export function CoverPreview({ values, previewId }) {
               />
             </div>
 
-            {/* University / Faculty / Department */}
+            {/* ── University / Faculty / Department ── */}
             <div style={{ width: INNER_W, textAlign: "center", marginBottom: 26, flexShrink: 0 }}>
-              <p style={{ fontFamily: TNR, fontSize: "19pt", fontWeight: "normal", margin: "0 0 5px", lineHeight: 1.25 }}>
+              <p style={{ fontFamily: TNR, fontSize: "22pt", fontWeight: "bold", margin: "0 0 5px", lineHeight: 1.25 }}>
                 Pabna University of Science and Technology
               </p>
-              <p style={{ fontFamily: TNR, fontSize: "13pt", fontWeight: "bold", margin: "0 0 3px", lineHeight: 1.3 }}>
+              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: "0 0 3px", lineHeight: 1.3 }}>
                 {faculty}
               </p>
-              <p style={{ fontFamily: TNR, fontSize: "13pt", fontWeight: "bold", color: "#8B0000", margin: 0, lineHeight: 1.3 }}>
+              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", color: "#02399f", margin: 0, lineHeight: 1.3 }}>
                 Department of {studentDeptName || <em style={{ color: "#aaa" }}>Department</em>}
               </p>
             </div>
+            <div style={{ height: 40, flexShrink: 0 }} />
 
-            {/* Course info */}
-            <div style={{ width: INNER_W, textAlign: "center", marginBottom: 24, flexShrink: 0 }}>
+            {/* ── Course info ── */}
+            <div style={{ width: INNER_W, textAlign: "center", flexShrink: 0 }}>
               <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: "0 0 3px" }}>
                 Course Title: {ph(values.courseTitle, "Course Title")}
               </p>
@@ -173,12 +170,13 @@ export function CoverPreview({ values, previewId }) {
               <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: "0 0 6px" }}>
                 Assignment on
               </p>
-              <p style={{ fontFamily: TNR, fontSize: "12pt", fontWeight: "normal", margin: 0 }}>
+              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: 0 }}>
                 {ph(values.assignmentTopic, "Assignment Topic")}
               </p>
             </div>
+            <div style={{ height: 70, flexShrink: 0 }} />
 
-            {/* Submitted By / To table */}
+            {/* ── Submitted By / To table ── */}
             <table
               style={{
                 width:          INNER_W,
@@ -196,32 +194,32 @@ export function CoverPreview({ values, previewId }) {
                 <tr>
                   {/* Submitted By */}
                   <td style={{
-                    border:        "1.5px solid #000",
+                    border:        "2px solid #000",
                     padding:       "12px 15px",
                     verticalAlign: "top",
                     fontFamily:    TNR,
-                    fontSize:      "10.5pt",
-                    lineHeight:    1.85,
+                    fontSize:      "11pt",
+                    lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "11.5pt" }}>
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "12pt" }}>
                       Submitted By:
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      <strong>Name:</strong> {ph(values.studentName, "Student Name")}
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      Name: {ph(values.studentName, "Student Name")}
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      <strong>Roll No:</strong> {ph(values.studentRoll, "Roll No")}
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      Roll no: {ph(values.studentRoll, "Roll No")}
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      <strong>Registration:</strong> {ph(values.studentRegistration, "Registration")}
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      Registration: {ph(values.studentRegistration, "Registration")}
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      <strong>Session:</strong> {ph(values.session, "Session")}
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      Session: {ph(values.session, "Session")}
                     </p>
-                    <p style={{ margin: "0 0 3px", fontFamily: TNR, fontWeight: "bold" }}>
-                      {values.year || "3rd"} Year {values.semester || "1st"} Semester
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      {values.year || "1st"} Year {values.semester || "1st"} Semester
                     </p>
-                    <p style={{ margin: 0, fontFamily: TNR }}>
+                    <p style={{ margin: 0, fontWeight: "bold", fontFamily: TNR }}>
                       Department of {studentDeptName || "Department"}
                     </p>
                   </td>
@@ -233,32 +231,32 @@ export function CoverPreview({ values, previewId }) {
                     padding:       "12px 15px",
                     verticalAlign: "top",
                     fontFamily:    TNR,
-                    fontSize:      "10.5pt",
-                    lineHeight:    1.85,
+                    fontSize:      "11pt",
+                    lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "11.5pt" }}>
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "12pt" }}>
                       Submitted To:
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      <strong>Name:</strong> {ph(values.teacherName, "Teacher Name")}
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      {ph(values.teacherName, "Teacher's Name")}
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
-                      {values.designation || "Lecturer"},
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
+                      {values.designation || "Designation"},
                     </p>
-                    <p style={{ margin: "0 0 1px", fontFamily: TNR }}>
+                    <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
                       Department of {teacherDeptName || <em style={{ color: "#aaa" }}>Department</em>},
                     </p>
-                    <p style={{ margin: 0, fontFamily: TNR }}>
+                    <p style={{ margin: 0, fontWeight: "bold", fontFamily: TNR }}>
                       Pabna University of Science and Technology
                     </p>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div style={{ flex: 1, minHeight: 48 }} />
 
-            {/* Submission date */}
-            <div style={{ width: INNER_W, textAlign: "center", marginTop: 28, flexShrink: 0 }}>
-              <p style={{ fontFamily: TNR, fontSize: "13pt", fontWeight: "bold", margin: 0 }}>
+            <div style={{ width: INNER_W, textAlign: "center", marginBottom: 36, flexShrink: 0 }}>
+              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold",color: "#02399f", margin: 0 }}>
                 Date of submission: {ph(values.dateOfSubmission, "DD.MM.YYYY")}
               </p>
             </div>

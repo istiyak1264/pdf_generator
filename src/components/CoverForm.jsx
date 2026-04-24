@@ -92,7 +92,6 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
         <Section icon={Icons.Book} title="Course Information" subtitle="Title, code and topic" defaultOpen>
           <FormField label="Course Title" required error={errors.courseTitle}>
             <Input
-              placeholder="e.g. Compiler Design"
               value={values.courseTitle}
               onChange={handle("courseTitle")}
               error={errors.courseTitle}
@@ -101,7 +100,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           <div className={styles.row}>
             <FormField label="Course Code" required error={errors.courseCode}>
               <Input
-                placeholder="e.g. CSE 3103"
+                placeholder="e.g. CSE 3101"
                 value={values.courseCode}
                 onChange={handle("courseCode")}
                 error={errors.courseCode}
@@ -117,7 +116,6 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           </div>
           <FormField label="Assignment Topic" required error={errors.assignmentTopic}>
             <Input
-              placeholder="e.g. DFA, NFA, Regex, CFG and CNF"
               value={values.assignmentTopic}
               onChange={handle("assignmentTopic")}
               error={errors.assignmentTopic}
@@ -128,7 +126,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
         <Section icon={Icons.User} title="Submitted By" subtitle="Student identity and class" defaultOpen>
           <FormField label="Student Name" required error={errors.studentName}>
             <Input
-              placeholder="e.g. Md. Istiyak Ahmed"
+              placeholder="e.g. student name"
               value={values.studentName}
               onChange={handle("studentName")}
               error={errors.studentName}
@@ -137,7 +135,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           <div className={styles.row}>
             <FormField label="Roll No." required error={errors.studentRoll}>
               <Input
-                placeholder="230103"
+                placeholder="e.g. roll no"
                 value={values.studentRoll}
                 onChange={handle("studentRoll")}
                 error={errors.studentRoll}
@@ -145,7 +143,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
             </FormField>
             <FormField label="Registration" required error={errors.studentRegistration}>
               <Input
-                placeholder="1011988"
+                placeholder="e.g. reg no"
                 value={values.studentRegistration}
                 onChange={handle("studentRegistration")}
                 error={errors.studentRegistration}
@@ -154,7 +152,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           </div>
           <FormField label="Session" required error={errors.session}>
             <Input
-              placeholder="e.g. 2022-2023"
+              placeholder="e.g. 2022-23"
               value={values.session}
               onChange={handle("session")}
               error={errors.session}
@@ -184,7 +182,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
         <Section icon={Icons.GradCap} title="Submitted To" subtitle="Teacher and department" defaultOpen>
           <FormField label="Teacher's Name" required error={errors.teacherName}>
             <Input
-              placeholder="e.g. Nitun Kumar Podder"
+              placeholder="e.g. Teacher's Name"
               value={values.teacherName}
               onChange={handle("teacherName")}
               error={errors.teacherName}
