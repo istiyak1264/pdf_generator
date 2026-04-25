@@ -201,7 +201,7 @@ export function CoverPreview({ values, previewId }) {
                     fontSize:      "11pt",
                     lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "12pt" }}>
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", textUnderlineOffset: "3px",margin: "0 0 5px", fontSize: "12pt" }}>
                       Submitted By:
                     </p>
                     <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
@@ -234,7 +234,7 @@ export function CoverPreview({ values, previewId }) {
                     fontSize:      "11pt",
                     lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", margin: "0 0 5px", fontSize: "12pt" }}>
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", textUnderlineOffset: "3px", margin: "0 0 5px", fontSize: "12pt" }}>
                       Submitted To:
                     </p>
                     <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
