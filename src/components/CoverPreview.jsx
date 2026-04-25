@@ -201,8 +201,11 @@ export function CoverPreview({ values, previewId }) {
                     fontSize:      "11pt",
                     lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", textUnderlineOffset: "3px",margin: "0 0 5px", fontSize: "12pt" }}>
-                      Submitted By:
+
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", margin: "0 0 5px", fontSize: "12pt" }}>
+                      <span style={{ display: "inline-block", borderBottom: "1.5px solid #000", paddingBottom: "1px" }}>
+                        Submitted By:
+                      </span>
                     </p>
                     <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
                       Name: {ph(values.studentName, "Student Name")}
@@ -234,8 +237,11 @@ export function CoverPreview({ values, previewId }) {
                     fontSize:      "11pt",
                     lineHeight:    1.5,
                   }}>
-                    <p style={{ fontFamily: TNR, fontWeight: "bold", textDecoration: "underline", textUnderlineOffset: "3px", margin: "0 0 5px", fontSize: "12pt" }}>
-                      Submitted To:
+                    
+                    <p style={{ fontFamily: TNR, fontWeight: "bold", margin: "0 0 5px", fontSize: "12pt" }}>
+                      <span style={{ display: "inline-block", borderBottom: "1.5px solid #000", paddingBottom: "1px" }}>
+                        Submitted To:
+                      </span>
                     </p>
                     <p style={{ margin: "0 0 1px", fontWeight: "bold", fontFamily: TNR }}>
                       {ph(values.teacherName, "Teacher's Name")}
@@ -256,7 +262,7 @@ export function CoverPreview({ values, previewId }) {
             <div style={{ flex: 1, minHeight: 48 }} />
 
             <div style={{ width: INNER_W, textAlign: "center", marginBottom: 36, flexShrink: 0 }}>
-              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold",color: "#02399f", margin: 0 }}>
+              <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", color: "#02399f", margin: 0 }}>
                 Date of submission: {ph(values.dateOfSubmission, "DD.MM.YYYY")}
               </p>
             </div>
