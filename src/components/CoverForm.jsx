@@ -100,7 +100,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           <div className={styles.row}>
             <FormField label="Course Code" required error={errors.courseCode}>
               <Input
-                placeholder="e.g. CSE 3101"
+                placeholder="e.g. CSE 1101"
                 value={values.courseCode}
                 onChange={handle("courseCode")}
                 error={errors.courseCode}
@@ -114,7 +114,13 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
               />
             </FormField>
           </div>
-          <FormField label="Assignment Topic" required error={errors.assignmentTopic}>
+          <FormField label="Type">
+            <Select value={values.assignmentType} onChange={handle("assignmentType")}>
+              <option value="Assignment">Assignment</option>
+              <option value="Lab Report">Lab Report</option>
+            </Select>
+          </FormField>
+          <FormField label="Assignment or Lab Report Topic" required error={errors.assignmentTopic}>
             <Input
               value={values.assignmentTopic}
               onChange={handle("assignmentTopic")}
@@ -152,7 +158,7 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
           </div>
           <FormField label="Session" required error={errors.session}>
             <Input
-              placeholder="e.g. 2022-23"
+              placeholder="e.g. 2024-25"
               value={values.session}
               onChange={handle("session")}
               error={errors.session}

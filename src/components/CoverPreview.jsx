@@ -4,8 +4,8 @@ import styles from "./CoverPreview.module.css";
 
 const A4W       = 794;
 const A4H       = 1123;
-const INSET     = 18;   // dashed border inset from page edge (all sides equal)
-const H_PAD     = 52;   // content horizontal padding inside the border
+const INSET     = 18;  
+const H_PAD     = 52;
 const V_PAD_TOP = 38;
 const V_PAD_BOT = 28;
 const INNER_W   = A4W - INSET * 2 - H_PAD * 2;
@@ -168,10 +168,10 @@ export function CoverPreview({ values, previewId }) {
                 Course Code: {ph(values.courseCode, "Course Code")}
               </p>
               <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: "0 0 6px" }}>
-                Assignment on
+                {values.assignmentType || "Assignment"} on
               </p>
               <p style={{ fontFamily: TNR, fontSize: "14pt", fontWeight: "bold", margin: 0 }}>
-                {ph(values.assignmentTopic, "Assignment Topic")}
+                {ph(values.assignmentTopic, "Topic Name")}
               </p>
             </div>
             <div style={{ height: 70, flexShrink: 0 }} />
