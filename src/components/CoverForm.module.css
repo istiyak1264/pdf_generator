@@ -8,7 +8,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  animation: panelReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: panelReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   animation-delay: 0.1s;
   position: relative;
   flex-shrink: 0;

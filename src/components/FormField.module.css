@@ -3,7 +3,10 @@
   flex-direction: column;
   gap: 6px;
   position: relative;
-  animation: fieldSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* 'backwards' (not 'both') so no leftover transform stays on the field
+     after the entrance animation - a permanent transform can disturb the
+     position of native <select> popups. */
+  animation: fieldSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 @keyframes fieldSlideIn {
@@ -80,20 +83,30 @@
 
 .input:hover:not(:focus):not(.inputError) {
   border-color: var(--input-border-hover);
-  background: var(--input-bg-hover);
+  background-color: var(--input-bg-hover);
 }
 
 .input:focus {
   border-color: var(--accent-gold);
-  background: var(--input-bg-focus);
+  background-color: var(--input-bg-focus);
   box-shadow:
     0 0 0 3px var(--accent-gold-glow),
     0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Lift text inputs slightly on focus. NOT applied to <select>: moving a select
+   while its native dropdown is opening makes the dropdown flicker or close. */
+input.input:focus {
   transform: translateY(-1px);
 }
 
 /* ── Select specifics ── */
 .select {
+  /* Never animate the select's position - see note above. */
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23b8975a' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -102,8 +115,11 @@
   cursor: pointer;
 }
 
-.select option {
-  background: var(--surface-2);
+.select option,
+.select optgroup {
+  /* Solid, high-contrast colours so the department names are always readable,
+     even in browsers that ignore the page theme for the native dropdown. */
+  background-color: var(--surface-2);
   color: var(--text-primary);
   font-family: var(--font-body);
   padding: 6px 12px;

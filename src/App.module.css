@@ -1,4 +1,7 @@
 .dark {
+  /* Makes native controls (select dropdowns, scrollbars) use dark colours */
+  color-scheme: dark;
+
   /* Backgrounds */
   --bg-main:         #0d0e12;
   --bg-page:         #0f1015;
@@ -47,6 +50,8 @@
 
 /* ── Light theme ── */
 .light {
+  color-scheme: light;
+
   --bg-main:         #f4f1eb;
   --bg-page:         #ece8e0;
   --nav-bg:          rgba(244, 241, 235, 0.92);

@@ -24,16 +24,17 @@ export function CoverPreview({ values, previewId }) {
   const faculty         = studentDept?.faculty ?? "Faculty of Engineering and Technology";
   const coverStyle      = values.coverStyle || "classic";
 
-  /* Flash overlay on field change */
-  const [flash, setFlash] = useState(false);
+  /* Flash overlay on field change.
+     flashId is bumped once per change and used as the overlay's React key, so
+     the one-shot CSS animation restarts exactly once per change. (Using
+     Date.now() as the key during render remounted the overlay on every render,
+     which looked like constant blinking.) */
+  const [flashId, setFlashId] = useState(0);
   const prevRef = useRef(values);
   useEffect(() => {
-    if (prevRef.current !== values) {
-      setFlash(true);
-      const t = setTimeout(() => setFlash(false), 700);
-      prevRef.current = values;
-      return () => clearTimeout(t);
-    }
+    if (prevRef.current === values) return;
+    prevRef.current = values;
+    setFlashId((n) => n + 1);
   }, [values]);
 
   /* Scale A4 canvas to fit the preview pane */
@@ -74,7 +75,7 @@ export function CoverPreview({ values, previewId }) {
         className={styles.a4Wrapper}
         style={{ width: A4W * scale, height: A4H * scale, flexShrink: 0, overflow: "hidden" }}
       >
-        {flash && <div className={styles.flashOverlay} key={Date.now()} />}
+        {flashId > 0 && <div className={styles.flashOverlay} key={flashId} />}
 
         {/* ─────────────── A4 Sheet ─────────────── */}
         <div

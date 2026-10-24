@@ -7,6 +7,8 @@
 }
 
 :root {
+  color-scheme: dark;
+
   /* Surfaces */
   --bg-page:           #0b0c10;
   --surface:           #11121a;
@@ -56,6 +58,7 @@
 
 /* ── Light Theme ── */
 [data-theme="light"] {
+  color-scheme: light;
   --bg-page:           #f2ece0;
   --surface:           #faf6ee;
   --surface-2:         #ede5d4;
