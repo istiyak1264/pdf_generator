@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { DEPARTMENTS } from "../data/departments";
+import { DEFAULT_COVER_STYLE } from "../data/coverStyles";
 
 const today = new Date();
 const formattedToday = `${String(today.getDate()).padStart(2, "0")}.${String(
@@ -7,6 +8,7 @@ const formattedToday = `${String(today.getDate()).padStart(2, "0")}.${String(
 ).padStart(2, "0")}.${today.getFullYear()}`;
 
 const INITIAL_STATE = {
+  coverStyle: DEFAULT_COVER_STYLE,
   courseTitle: "",
   courseCode: "",
   assignmentType: "Assignment",
@@ -57,7 +59,8 @@ export function useForm() {
   }, [values]);
 
   const reset = useCallback(() => {
-    setValues(INITIAL_STATE);
+    // keep the chosen cover style when clearing the form
+    setValues((prev) => ({ ...INITIAL_STATE, coverStyle: prev.coverStyle }));
     setErrors({});
   }, []);
 

@@ -30,13 +30,15 @@ export default function App() {
     if (!validate()) return;
     setGenerating(true);
     try {
-      await generatePDF(PREVIEW_ID, `cover-${values.studentName || "page"}`);
+      await generatePDF(PREVIEW_ID, `cover-${values.studentName || "page"}`, {
+        forceTimes: values.coverStyle === "classic",
+      });
     } catch (err) {
       console.error("PDF generation failed:", err);
     } finally {
       setGenerating(false);
     }
-  }, [validate, values.studentName]);
+  }, [validate, values.studentName, values.coverStyle]);
 
   return (
     <div

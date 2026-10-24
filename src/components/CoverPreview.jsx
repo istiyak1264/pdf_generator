@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { DEPARTMENTS } from "../data/departments";
+import { OrnamentalSheet, BracketsSheet } from "./CoverSheets";
 import styles from "./CoverPreview.module.css";
 
 const A4W       = 794;
@@ -11,7 +12,7 @@ const V_PAD_BOT = 28;
 const INNER_W   = A4W - INSET * 2 - H_PAD * 2;
 
 const FONT_INJECT = `
-  @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 `;
 const TNR = "'Times New Roman', 'Tinos', Times, serif";
 
@@ -21,6 +22,7 @@ export function CoverPreview({ values, previewId }) {
   const studentDeptName = studentDept?.fullName ?? "";
   const teacherDeptName = teacherDept?.fullName ?? "";
   const faculty         = studentDept?.faculty ?? "Faculty of Engineering and Technology";
+  const coverStyle      = values.coverStyle || "classic";
 
   /* Flash overlay on field change */
   const [flash, setFlash] = useState(false);
@@ -93,6 +95,26 @@ export function CoverPreview({ values, previewId }) {
           {/* Inject Tinos so browsers render TNR correctly */}
           <style>{FONT_INJECT}</style>
 
+          {coverStyle === "ornamental" && (
+            <OrnamentalSheet
+              values={values}
+              faculty={faculty}
+              studentDeptName={studentDeptName}
+              teacherDeptName={teacherDeptName}
+              ph={ph}
+            />
+          )}
+          {coverStyle === "brackets" && (
+            <BracketsSheet
+              values={values}
+              faculty={faculty}
+              studentDeptName={studentDeptName}
+              teacherDeptName={teacherDeptName}
+              ph={ph}
+            />
+          )}
+
+          {coverStyle === "classic" && (<>
           {/* ── Single uniform dashed border ── */}
           <svg
             style={{
@@ -268,6 +290,7 @@ export function CoverPreview({ values, previewId }) {
             </div>
 
           </div>{/* /content */}
+          </>)}
         </div>{/* /A4 sheet */}
       </div>{/* /clip wrapper */}
     </div>

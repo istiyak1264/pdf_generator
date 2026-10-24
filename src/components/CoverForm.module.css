@@ -313,3 +313,49 @@
     min-height: 280px;
   }
 }
+
+/* ── Cover style picker ── */
+.styleGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.styleOption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--input-bg, var(--surface-2));
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.styleOption:hover {
+  border-color: var(--accent-gold);
+}
+
+.styleOption:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.styleOptionActive {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1px var(--accent-gold), 0 0 14px var(--accent-gold-glow);
+}
+
+.styleName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.styleDesc {
+  font-size: 11px;
+  color: var(--text-secondary);
+}

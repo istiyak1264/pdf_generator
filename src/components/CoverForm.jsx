@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormField, Input, Select } from "./FormField";
 import { DEPARTMENTS, YEARS, SEMESTERS, DESIGNATIONS } from "../data/departments";
+import { COVER_STYLES } from "../data/coverStyles";
 import styles from "./CoverForm.module.css";
 
 const Icons = {
@@ -23,6 +24,14 @@ const Icons = {
       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
       <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+  ),
+  Layout: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <line x1="3" y1="9" x2="21" y2="9"/>
+      <line x1="9" y1="21" x2="9" y2="9"/>
     </svg>
   ),
   ChevronDown: () => (
@@ -89,6 +98,24 @@ export function CoverForm({ values, errors, onChange, onGenerate, onReset, gener
 
       {/* ── Scrollable Fields ── */}
       <div className={styles.scrollArea}>
+        <Section icon={Icons.Layout} title="Cover Style" subtitle="Choose the page layout" defaultOpen>
+          <div className={styles.styleGrid} role="radiogroup" aria-label="Cover style">
+            {COVER_STYLES.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                role="radio"
+                aria-checked={values.coverStyle === s.id}
+                className={`${styles.styleOption} ${values.coverStyle === s.id ? styles.styleOptionActive : ""}`}
+                onClick={() => onChange("coverStyle", s.id)}
+              >
+                <span className={styles.styleName}>{s.name}</span>
+                <span className={styles.styleDesc}>{s.description}</span>
+              </button>
+            ))}
+          </div>
+        </Section>
+
         <Section icon={Icons.Book} title="Course Information" subtitle="Title, code and topic" defaultOpen>
           <FormField label="Course Title" required error={errors.courseTitle}>
             <Input

@@ -1,8 +1,28 @@
-export async function generatePDF(elementId, filename = "cover-page") {
+/**
+ * @param {string} elementId  id of the A4 preview element
+ * @param {string} filename   output file name (without .pdf)
+ * @param {{ forceTimes?: boolean }} options
+ *        forceTimes: force Times New Roman / Tinos on every node (Classic style).
+ *        Pass false for styles that use their own font (EB Garamond).
+ */
+export async function generatePDF(elementId, filename = "cover-page", { forceTimes = true } = {}) {
   const element = document.getElementById(elementId);
   if (!element) throw new Error(`Element #${elementId} not found`);
 
   await document.fonts.ready;
+  if (!forceTimes) {
+    /* make sure every EB Garamond face used by the preview is loaded */
+    try {
+      await Promise.all([
+        document.fonts.load('400 20px "EB Garamond"'),
+        document.fonts.load('500 20px "EB Garamond"'),
+        document.fonts.load('700 20px "EB Garamond"'),
+        document.fonts.load('italic 400 20px "EB Garamond"'),
+      ]);
+    } catch {
+      /* fall back to whatever is available */
+    }
+  }
 
   /* Save current styles */
   const saved = {
@@ -54,8 +74,8 @@ export async function generatePDF(elementId, filename = "cover-page") {
         /* Ensure the cloned document also has the font import */
         const style = clonedDoc.createElement("style");
         style.textContent = `
-          @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-          * { font-family: 'Times New Roman', 'Tinos', Times, serif !important; }
+          @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+          ${forceTimes ? "* { font-family: 'Times New Roman', 'Tinos', Times, serif !important; }" : ""}
         `;
         clonedDoc.head.appendChild(style);
         /* Wait briefly for the font to be injected */
